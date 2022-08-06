@@ -1,6 +1,6 @@
 import React from "react";
 
-const withCounter = function (originalComponent) {
+const withCounter = function (OriginalComponent) {
   class enhancedComponet extends React.Component {
     constructor(props) {
       super(props);
@@ -9,25 +9,33 @@ const withCounter = function (originalComponent) {
       };
     }
 
-    increaseCounter() {
+    increaseCounter = () => {
       this.setState((previousState) => {
         return {
           count: previousState.count + 1,
         };
       });
-    }
+    };
 
-    deccreaseCounter() {
+    deccreaseCounter = () => {
       this.setState((previousState) => {
         return {
           count: previousState.count - 1,
         };
       });
-    }
+    };
 
     render() {
-      return <originalComponent />;
+      return (
+        <OriginalComponent
+          count={this.state.count}
+          increaseCounter={this.increaseCounter}
+          decreaseCounter={this.deccreaseCounter}
+        />
+      );
     }
   }
   return enhancedComponet;
 };
+
+export default withCounter;
